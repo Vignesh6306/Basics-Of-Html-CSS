@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>How to Use Position, Display, Z-Index and Overflow</title>
+  </head>
+
+  <style>
+    /* ---------- Pseudo-elements demo ---------- */
+    .pseudo-title {
+      position: relative; /* so ::before/::after can be positioned relative to this */
+      font-family: 'Times New Roman', Times, serif;
+      color: black;
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .pseudo-title::before {
+      content: "Pseudo-elements (theory)";
+      display: block;
+      text-align: center;
+      text-decoration: underline;
+      font-family: 'Times New Roman', Times, serif;
+      color: black;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .pseudo-title::after {
+      content: "Styled with ::before and ::after";
+      display: block;
+      text-align: center;
+      font-family: 'Times New Roman', Times, serif;
+      color: rgb(120, 120, 120);
+      margin-top: 6px;
+      border-bottom: 1px dotted gray;
+      padding-bottom: 4px;
+    }
+
+    /* ---------- Position demo ---------- */
+    .pos-container {
+      position: relative; /* reference for absolute children */
+      height: 220px;
+      border: 2px solid #444;
+      margin: 20px 0;
+      background: #111;
+      color: #ddd;
+      font-family: 'Times New Roman', Times, serif;
+      padding: 10px;
+    }
+
+    .s {
+      position: static;
+      display: block;
+      background: #333;
+      color: #ffcc00;
+      margin: 4px 0;
+      padding: 4px;
+    }
+
+    .r {
+      position: relative;
+      display: inline-block;
+      background: #444;
+      color: #ffcc00;
+      margin: 4px;
+      padding: 4px 8px;
+      top: 10px;   /* offset from its normal position */
+      left: 20px;
+    }
+
+    .a {
+      position: absolute;
+      display: block;
+      background: #555;
+      color: #ffcc00;
+      padding: 4px 8px;
+      top: 40px;
+      left: 40px;
+    }
+
+    .f {
+      position: fixed;
+      display: block;
+      background: #666;
+      color: #ffcc00;
+      padding: 4px 8px;
+      bottom: 10px;
+      right: 10px;
+      font-size: 12px;
+    }
+
+    .st {
+      position: sticky;
+      display: block;
+      background: #777;
+      color: #ffcc00;
+      padding: 4px 8px;
+      top: 0; /* sticks when scrolling reaches top of container */
+      margin-top: 60px;
+    }
+
+    /* ---------- Display demo ---------- */
+    .display-demo {
+      border: 2px solid #444;
+      margin: 20px 0;
+      padding: 10px;
+      font-family: 'Times New Roman', Times, serif;
+      color: #ddd;
+      background: #111;
+    }
+
+    .d-block {
+      display: block;
+      background: #333;
+      color: #ffcc00;
+      margin: 6px 0;
+      padding: 4px;
+    }
+
+    .d-inline {
+      display: inline;
+      background: #444;
+      color: #ffcc00;
+      padding: 2px 4px;
+      /* width/height would be ignored here */
+    }
+
+    .d-inline-block {
+      display: inline-block;
+      background: #555;
+      color: #ffcc00;
+      padding: 4px 8px;
+      margin: 4px;
+      width: 80px;
+      height: 30px;
+    }
+
+    .d-flex {
+      display: flex;
+      gap: 8px;
+      background: #222;
+      padding: 8px;
+      margin-top: 10px;
+    }
+
+    .d-flex > span {
+      background: #444;
+      color: #ffcc00;
+      padding: 4px 8px;
+    }
+
+    .d-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: #222;
+      padding: 8px;
+      margin-top: 10px;
+    }
+
+    .d-grid > span {
+      background: #444;
+      color: #ffcc00;
+      padding: 4px;
+      text-align: center;
+    }
+
+    /* ---------- Overflow demo ---------- */
+    .overflow-box {
+      background-color: black;
+      color: darkorange;
+      height: 150px;
+      width: 250px;
+      overflow-x: scroll;
+      overflow-y: scroll;
+      font-family: 'Times New Roman', Times, serif;
+      padding: 8px;
+      margin: 20px 0;
+      white-space: nowrap; /* to force horizontal scrolling */
+    }
+
+    /* ---------- Z-index demo ---------- */
+    .z-container {
+      position: relative;
+      height: 180px;
+      border: 2px solid #444;
+      margin: 20px 0;
+      background: #111;
+      font-family: 'Times New Roman', Times, serif;
+      color: #ddd;
+      padding: 10px;
+    }
+
+    .z-box {
+      position: absolute;
+      width: 140px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 12px;
+      border: 1px solid #fff;
+    }
+
+    .z1 {
+      background: rgba(255, 0, 0, 0.7);
+      top: 20px;
+      left: 20px;
+      z-index: 1;
+    }
+
+    .z2 {
+      background: rgba(0, 255, 0, 0.7);
+      top: 40px;
+      left: 60px;
+      z-index: 2;
+    }
+
+    .z3 {
+      background: rgba(0, 0, 255, 0.7);
+      top: 60px;
+      left: 100px;
+      z-index: 3;
+    }
+  </style>
+
+  <body>
+    <!-- Pseudo-elements -->
+    <h1 class="pseudo-title"></h1>
+    <ol>
+      <li>A pseudo-element is a CSS feature that lets you style a specific part of an element or insert generated content without changing the HTML.</li>
+      <li>Syntax: <code>selector::pseudo-element { ... }</code>. Common ones: <code>::before</code>, <code>::after</code>, <code>::first-line</code>, <code>::selection</code>.</li>
+    </ol>
+
+    <!-- Position -->
+    <h1>Position</h1>
+    <div class="pos-container">
+      <div class="s">static (default): normal flow; top/left/right/bottom and z-index do not apply.</div>
+      <div class="r">relative: offset from normal flow; creates positioning context.</div>
+      <div class="a">absolute: removed from flow; positioned relative to nearest non-static ancestor.</div>
+      <div class="st">
+        sticky: behaves like relative until scroll threshold, then like fixed (top: 0 here).
+      </div>
+    </div>
+    <div class="f">fixed: positioned relative to viewport (bottom-right corner).</div>
+
+    <!-- Display -->
+    <h1>Display</h1>
+    <div class="display-demo">
+      <div class="d-block">block: takes full width, starts on a new line.</div>
+      <div>
+        inline:
+        <span class="d-inline">flows within text; width/height ignored.</span>
+        More text here to show inline behavior.
+      </div>
+      <div>
+        inline-block:
+        <span class="d-inline-block">respects width/height</span>
+        and sits inline with text.
+      </div>
+
+      <div class="d-flex">
+        <span>flex item 1</span>
+        <span>flex item 2</span>
+        <span>flex item 3</span>
+      </div>
+
+      <div class="d-grid">
+        <span>grid 1</span>
+        <span>grid 2</span>
+        <span>grid 3</span>
+        <span>grid 4</span>
+        <span>grid 5</span>
+        <span>grid 6</span>
+      </div>
+    </div>
+
+    <!-- Overflow -->
+    <h1>Overflow</h1>
+    <div class="overflow-box">
+      z-index controls the stacking order (which element appears on top) of positioned elements (position other than static).
+      Higher z-index → appears above lower z-index in the same stacking context.
+      Stacking context: Created by certain properties/combinations, commonly position: relative/absolute/fixed/sticky with a non-auto z-index.
+      Inside a stacking context, children (including pseudo-elements) are ordered by z-index and DOM order.
+      Default order for an element with pseudo-elements (simplified): ::before, element’s background/border and in-flow content, ::after.
+      To place a pseudo-element behind its parent’s content: Give the parent a stacking context (e.g., position: relative; z-index: 1).
+      Set the pseudo-element to position: absolute (or relative) and a negative z-index (e.g., -1).
+    </div>
+
+    <!-- Z-index -->
+    <h1>Z-index</h1>
+    <div class="z-container">
+      <div class="z-box z1">z-index: 1 (red)</div>
+      <div class="z-box z2">z-index: 2 (green)</div>
+      <div class="z-box z3">z-index: 3 (blue)</div>
+    </div>
+  </body>
+</html>
